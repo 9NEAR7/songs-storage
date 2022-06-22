@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Stack, Container, Form, Button } from "react-bootstrap";
 import firebaseApp from "../credenciales";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 const auth = getAuth(firebaseApp);
 
@@ -16,8 +16,13 @@ const Logueo = () => {
       const correo = e.target.formBasicEmail.value;
       const contra = e.target.formBasicPassword.value;
 
-      const usuario = await createUserWithEmailAndPassword(auth, correo, contra);
-      console.log(usuario);
+      if(estaRegistrandose){
+        //si se registra
+        const usuario = await createUserWithEmailAndPassword(auth, correo, contra);
+      }else{
+        //si esta iniciando sesión
+        signInWithEmailAndPassword(auth, correo, contra);
+      }
 }
 
 
